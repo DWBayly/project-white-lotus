@@ -30,13 +30,10 @@ const compareTyping = (attacker, defendingMonster) => {
 const damageCalculator = (damage, effectiveness) => {
   switch (effectiveness) {
   case 'strong':
-    damage *= 1.5;
-    break;
-  case 'normal':
-    damage *= 1;
+    damage = Math.round(damage*1.5);
     break;
   case 'weak':
-    damage *= 0.5;
+    damage = Math.round(damage*0.5);
     break;
   }
   return damage;
@@ -72,7 +69,7 @@ const attackFuncs = {
       return targetMonster.dodged(messages);
     }
     messages.push(`${targetMonster.name} becomes enveloped in slime...`);
-    const damage = damageCalculator(4, compareTyping(this, targetMonster));
+    const damage = damageCalculator(400, compareTyping(this, targetMonster));
 
     const description = `Slime causes ${targetMonster.name} to lose ${damage} hp each turn (3 turns).`;
     new Modifier(targetMonster, {}, 'dot', description, (modifier, messages) => {
@@ -84,14 +81,14 @@ const attackFuncs = {
     return messages;
   },
   roar: function(attackedPlayer, messages){
-    return doAOEAttack(attackedPlayer, 3, this, messages);
+    return doAOEAttack(attackedPlayer, 300, this, messages);
   },
   insanity: function(attackedPlayer, messages){
     const targetMonster = attackedPlayer.activeMonster;
     if(!rollToHit(this)) {
       return targetMonster.dodged(messages);
     }
-    const damage = damageCalculator(6, compareTyping(this, targetMonster));
+    const damage = damageCalculator(600, compareTyping(this, targetMonster));
     messages.push(`${targetMonster.name} is less accurate...`);
 
     const description = `${targetMonster.name} loses 1 accuracy per turn until benched. Then accuracy resets.`;
@@ -132,7 +129,7 @@ const attackFuncs = {
         modifier.removeModifier();
       }
     });
-    return targetMonster.takeDamage(damageCalculator(5, compareTyping(this, targetMonster)), messages);
+    return targetMonster.takeDamage(damageCalculator(500, compareTyping(this, targetMonster)), messages);
   },
   deep_knowledge: function(attackedPlayer, messages){
     const targetMonster = attackedPlayer.activeMonster;
@@ -159,7 +156,7 @@ const attackFuncs = {
       return targetMonster.takeDamage(1, messages, true);
     });
 
-    const damage = damageCalculator(10, compareTyping(this, targetMonster));
+    const damage = damageCalculator(1000, compareTyping(this, targetMonster));
     return targetMonster.takeDamage(damage, messages);
   },
 
@@ -168,7 +165,7 @@ const attackFuncs = {
     if(!rollToHit(this)) {
       return targetMonster.dodged(messages);
     }
-    const dmg = getRandomNumber(14, 18) ;
+    const dmg = getRandomNumber(1400, 1800) ;
     // If the monster is supercharged perform an AOE attack
     if(this.supercharged) {
       return doAOEAttack(attackedPlayer, dmg, this, messages);
@@ -182,7 +179,7 @@ const attackFuncs = {
       return targetMonster.dodged(messages);
     }
 
-    const dmg = getRandomNumber(5, 8);
+    const dmg = getRandomNumber(500, 800);
     messages.push(`${attackedPlayer.activeMonster.name} is now on the field.`);
     // check for supercharged and add to messages accordingly.
     if(this.supercharged) {
@@ -207,7 +204,7 @@ const attackFuncs = {
     if(!rollToHit(this)) {
       return targetMonster.dodged(messages);
     }
-    const dmg = getRandomNumber(10, 12);
+    const dmg = getRandomNumber(1000, 1200);
     if(this.supercharged) {
       doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
@@ -233,13 +230,13 @@ const attackFuncs = {
     if(!rollToHit(this)) {
       return targetMonster.dodged(messages);
     }
-    const dmg = 8;
+    const dmg = 800;
     if(this.supercharged) {
       doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
       targetMonster.takeDamage(damageCalculator(dmg, compareTyping(this, targetMonster)), messages);
     }
-    return this.healHp(4, messages);
+    return this.healHp(400, messages);
   },
 
   hyper_lance: function(attackedPlayer, messages){
@@ -247,7 +244,7 @@ const attackFuncs = {
     if(!rollToHit(this)) {
       return targetMonster.dodged(messages);
     }
-    const dmg = getRandomNumber(8, 12);
+    const dmg = getRandomNumber(800, 1200);
     if(this.supercharged) {
       return doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
@@ -259,7 +256,7 @@ const attackFuncs = {
     if(!rollToHit(this)) {
       return targetMonster.dodged(messages);
     }
-    const dmg = getRandomNumber(10, 12) ;
+    const dmg = getRandomNumber(1000, 1200) ;
     if(this.supercharged) {
       doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
@@ -279,7 +276,7 @@ const attackFuncs = {
     if(!rollToHit(this)) {
       return targetMonster.dodged(messages);
     }
-    const dmg = getRandomNumber(12, 16);
+    const dmg = getRandomNumber(1200, 1600);
     if(this.supercharged) {
       return doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
@@ -291,7 +288,7 @@ const attackFuncs = {
     if(!rollToHit(this)) {
       return targetMonster.dodged(messages);
     }
-    const dmg = getRandomNumber(5, 18);
+    const dmg = getRandomNumber(500, 1800);
     if(this.supercharged) {
       return doAOEAttack(attackedPlayer, dmg, this, messages);
     } else {
