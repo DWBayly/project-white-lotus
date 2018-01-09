@@ -71,7 +71,7 @@ class CompleteMonster {
   // Call this function when an abiliti heals a monster
   healHp(amount, messages){
     this.hp += amount;
-    messages.unshift({type:'heal', target: this, value: amount, playerId: this.playerId, message:`${this.name} healed ${amount} hp!`});
+    messages.push({type:'heal', target: this, value: amount, playerId: this.playerId, message:`${this.name} healed ${amount} hp!`});
     return messages;
   }
   // call this function when request an attack to be made.

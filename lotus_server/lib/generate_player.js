@@ -31,6 +31,7 @@ class Player {
           this.findActiveMonster();
         }
         monster.bench = true;
+        monster.passiveActive = false;
       }
     }
   }

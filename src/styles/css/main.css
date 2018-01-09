@@ -72,6 +72,7 @@ section.nav-links {
   display: flex; }
 
 a.nav-link {
+  font-size: 1.3rem;
   padding: 1rem;
   display: block;
   margin-right: 2rem; }
@@ -105,6 +106,7 @@ section.nav-user {
   display: flex; }
   section.nav-user p {
     color: white;
+    font-size: 1.2rem;
     padding: 1rem;
     margin-right: 3rem; }
   section.nav-user button {

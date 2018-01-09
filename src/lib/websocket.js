@@ -56,7 +56,7 @@ const printInfo = (infoCollection, infoName, player) => {
       }
       if(monsterContainer){
         // set the delay only if there is a info span to create
-        delay = 1000;
+        delay = 500;
         const infoSpan = makeInfoSpan(value, infoName);
         monsterContainer.prepend(infoSpan);
         delayFunction(2000, () => {
@@ -85,7 +85,7 @@ const collectMessages = (messages) => {
     const {type, target, value, playerId, message} = messageObject;
     // If it's just a basic message, push it and return.
     if(!target){
-      messagesCollection.push(messageObject);
+      messagesCollection.unshift(messageObject);
       return;
     }
     if(type === 'animate'){
@@ -111,7 +111,7 @@ const collectMessages = (messages) => {
       };
     }
     // push the message to be displayed in the messages component
-    messagesCollection.push(message);
+    messagesCollection.unshift(message);
   });
   return {alertsCollection, animationsCollection, messagesCollection};
 };
