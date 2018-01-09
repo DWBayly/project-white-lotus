@@ -32,9 +32,6 @@ server.use(cookieSession({
 }));
 server.use(express.static('dist'));
 
-// Default room for testing.
-socketRouter.genBattle('1');
-
 server.use('/battles', socketRouter);
 server.use('/monsters', monsterRouter);
 server.use('/user', userRouter);

@@ -8,19 +8,24 @@ class Team{
   }
   // returns number of alive monsters
   aliveMonsters(){
-    return Object.keys(this).length;
+    const monsters = [];
+    for(const monstId in this){
+      const monster = this[monstId];
+      monsters.push(monster);
+    }
+    return monsters;
   }
 }
 
-const generateTeam = (team) => {
+const generateTeam = (team, userid) => {
   const teamMembers = [];
   // spin up the promises
   team.forEach(creature => {
-    teamMembers.push(getCreature(creature));
+    teamMembers.push(getCreature(creature, userid));
   });
   // Once all the teamMembers are pulled.
   return Promise.all(teamMembers).then(teamMembers => {
-    return new Team(teamMembers);
+    return new Team(teamMembers, userid);
   });
 };
 

@@ -3,8 +3,8 @@ div#battlefield{
   color:black;
   padding-top: 5rem;
   section.messages {
-    padding: 2rem;
-    height: 150px;
+    padding: 2rem 4rem;
+    height: 115px;
     background-color: $messages-color;
     border: 2px solid $message-border-color;
     font-size: 1rem;
@@ -15,7 +15,6 @@ div#battlefield{
     margin-bottom: 1rem;
 
     section.messages-content{
-      padding: 2rem;
       border-radius: $border-radius;
       p {
         margin-bottom: 10px;
@@ -26,8 +25,8 @@ div#battlefield{
   .player {
     background-color: $player-color;
     border: 2px solid $message-border-color;
-    height: 300px;
-    padding: 4rem;
+    height: 325px;
+    padding: 2rem 4rem;
     position: relative;
     border-radius: $border-radius;
     h1{

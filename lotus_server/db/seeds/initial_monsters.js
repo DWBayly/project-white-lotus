@@ -275,7 +275,7 @@ exports.seed = function(knex, Promise) {
           image_url: 'TW',
           attack_id: attacks[7],
           creature: 'kaiju',
-          nameword:'Subby-armed'
+          nameword:'Stubby-armed'
         },
         {
           id: arms[2],

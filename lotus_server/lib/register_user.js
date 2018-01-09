@@ -13,7 +13,6 @@ const register_user = (req, res) => {
     knex('users').where({email: email})
       .then(users => {
         if (users.length > 0) {
-          // TODO: Alert the user that their name is already taken
           console.log('A user with that name already exists');
           res.status(501).send(JSON.stringify({error: 'A user with that name already exists'}));
           return;

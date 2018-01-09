@@ -3,10 +3,14 @@ const bcrypt = require('bcrypt');
 const loginUser = (knex) => {
   return (req, res) => {
     const {email, password} = req.body;
+    if(!email || !password){
+      res.send(JSON.stringify({error:'Both a username and a password are required.'}));
+      return;
+    }
     knex.table('users').first('id','email','brouzoff','password').where('email',email)
       .then(user => {
-        if(user === undefined){
-          res.send(JSON.stringify({error:'User or password could not be found 1'}));
+        if(!user){
+          res.send(JSON.stringify({error:'The username or password entered doesn\'t match our records.'}));
           return;
         }
         // Check password info
@@ -16,7 +20,7 @@ const loginUser = (knex) => {
             res.status(200).send(JSON.stringify({flash: 'Login success!'}));
             return;
           }
-          res.send(JSON.stringify({error:'User or password could not be found 2'}));
+          res.send(JSON.stringify({error:'The username or password entered doesn\'t match our records.'}));
         });
       });
   };

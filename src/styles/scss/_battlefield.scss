@@ -1,3 +1,50 @@
+// animations and effects
+@keyframes damageNumber {
+  0% {
+    bottom: 20rem;
+  }
+  50%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+    bottom:23rem;
+  }
+}
+@keyframes playerAttackAnimation {
+  0% {
+    right:0;
+  }
+  50%{
+    right:50px;
+  }
+  100%{
+    right:0px;
+  }
+}
+@keyframes opponentAttackAnimation {
+  0% {
+    left:0;
+  }
+  50%{
+    left:50px;
+  }
+  100%{
+    left:0px;
+  }
+}
+@keyframes deathFadeOut {
+    0% {
+      opacity: 1;
+    }
+    50%{
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+}
+
 .battlefield-visual{
   position: relative;
   height:350px;
@@ -25,53 +72,28 @@ span.monster-hp{
   color:white;
 }
 
-.kaiju{
-  height: 187px;
-  width: 187px;
-}
-
-.mecha{
-  width: 100px;
-  height: 187px;
-}
-
-.player-side{
-  position: absolute;
-  display: flex;
-  bottom: 0;
-  left: 2rem;
-  .player-monster{
-    position: relative;
-    margin-right: 1rem;
-    cursor: pointer;
+.monster{
+  height: 150px;
+  width: 150px;
+  position: relative;
+  margin-left: 1rem;
+  order: -2;
+  cursor: pointer;
+  &.dead{
+    order:0;
+    opacity: 0;
   }
-  img {
-    transform: scaleX(-1);
-    height: 100%;
-    width: 100%;
+  &.death-fade-out{
+    order: -1;
+    filter:invert(1);
+    animation: deathFadeOut 1s ease-out;
+    animation-fill-mode: forwards;
   }
-  &:hover{
-    span.monster-name{
-      display: block;
-    }
-  }
-  .active{
-    order:1;
-  }
-}
-
-.opponent-side{
-  position: absolute;
-  display: flex;
-  height: auto;
-  right: 2rem;
-  bottom: 0;
-  .opponent-monster{
-    position: relative;
-    margin-left: 1rem;
-    cursor: pointer;
+  &.active{
+    order:-3;
   }
   img{
+    position: relative;
     height: 100%;
     width: 100%;
   }
@@ -80,7 +102,53 @@ span.monster-hp{
       display: block;
     }
   }
-  .active{
-    order:-1;
+}
+
+.opponent-side{
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  bottom: 0;
+  left: 2rem;
+  img{
+    transform:scaleX(-1);
   }
+}
+.player-side{
+  position: absolute;
+  display: flex;
+  height: auto;
+  right: 2rem;
+  bottom: 0;
+}
+
+.attack-player{
+  animation: playerAttackAnimation .5s ease-out;
+  animation-fill-mode: forwards;
+}
+.attack-opponent{
+  @extend .attack-player;
+  animation: opponentAttackAnimation .5s ease-out;
+}
+
+// text effect
+.damage{
+  text-shadow: -1px 0 #000000,0 1px #000000,1px 0 #000000,0 -1px #000000;
+  font-size: 3rem;
+  position: absolute;
+  bottom: 22rem;
+  width: 100%;
+  text-align: center;
+  color: red;
+  animation: damageNumber 1s linear;
+  animation-fill-mode: forwards;
+}
+.heal{
+  @extend .damage;
+  color: green;
+}
+.miss{
+  @extend .damage;
+  color:orange;
 }

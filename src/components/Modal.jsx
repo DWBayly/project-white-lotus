@@ -5,9 +5,6 @@ import React, { Component } from 'react';
 // Footer should be links out
 
 class Modal extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <section id={this.props.id || ''} className="modal hidden">

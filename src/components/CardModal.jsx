@@ -7,9 +7,6 @@ import DetailedCard from './card_components/DetailedCard.jsx';
 // Footer should be links out
 
 class Modal extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <section id={this.props.id || ''} className="modal hidden" onClick={toggleModalByIdButton(this.props.id)}>

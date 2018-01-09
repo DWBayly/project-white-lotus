@@ -4,9 +4,6 @@ import cardImageHeader from './card_components/cardImageHeader.jsx';
 import {toggleModalByIdButton} from '../lib/element_effect_helpers';
 
 class ActiveMonster extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const {monster} = this.props;
     return (

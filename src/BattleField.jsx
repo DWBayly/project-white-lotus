@@ -1,36 +1,45 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 // This will throw warning 'Route is defined but never used'
 // but it's required for routing between monsters#index and monsters#show
-import { BrowserRouter as Route, Link } from 'react-router-dom';
-import MonsterInfo from './components/MonsterInfo';
+import {BrowserRouter as Route} from 'react-router-dom';
 import {toggleModalByIdButton} from './lib/element_effect_helpers';
 
-class Monster extends Component {
-  constructor(props) {
-    super(props);
-  }
-  // Places monster images on the battlefield. Prefix is either player or opponent as a string.
-  generateMonsterImages(player, prefix){
-    const {team, activeMonster} = player;
+const delayFunction = (ms, callback) => {
+  return new Promise(() => {
+    setTimeout(callback, ms);
+  });
+};
+
+class BattleField extends Component {
+  // Places monster images on the battlefield. Prefix is either "player" or "opponent" as a string.
+  generateMonsterImages(player) {
+    const {team, graveyard, activeMonster} = player;
     const monsters = [];
     // add benched monsters
-    for(const monsterId in team){
-      if(activeMonster && monsterId === activeMonster.id) continue;
+    for (const monsterId in team) {
       const curMonster = team[monsterId];
+      let className = 'monster';
+      // if this monsters is the active monster, add the active class.
+      if(activeMonster && monsterId === activeMonster.id) {
+        className += ' active';
+      }
       monsters.push(
-        <div className={`${prefix}-monster ${curMonster.creature}`} onClick={toggleModalByIdButton(`${curMonster.id}-modal`)}>
+        <div key={monsterId} id={`m-${monsterId}`} className={className} onClick={toggleModalByIdButton(`${curMonster.id}-modal`)}>
           <span className='monster-name'>{curMonster.name}</span>
           <span className='monster-hp'>HP:{curMonster.hp}</span>
           <img src={curMonster.image_url} alt={curMonster.name}/>
         </div>
       );
     }
-    if(activeMonster) {
+    for(const monsterId in graveyard){
+      const deadMonster = graveyard[monsterId];
+      let className = 'monster dead';
+      if(!deadMonster.animated){
+        className += ' death-fade-out';
+      }
       monsters.push(
-        <div className={`${prefix}-monster active ${activeMonster.creature}`} onClick={toggleModalByIdButton(`${activeMonster.id}-modal`)}>
-          <span className='monster-name'>{activeMonster.name}</span>
-          <span className='monster-hp'>HP:{activeMonster.hp}</span>
-          <img src={activeMonster.image_url} alt={activeMonster.name} />
+        <div key={monsterId} id={`m-${monsterId}`} className={className}>
+          <img src={deadMonster.image_url} alt={deadMonster.name}/>
         </div>
       );
     }
@@ -38,17 +47,15 @@ class Monster extends Component {
   }
   render() {
     const {player, opponent} = this.props;
-    return (
-      <section className="battlefield-visual row">
-        <div className="player-side">
-          {this.generateMonsterImages(player, 'player')}
-        </div>
-        <div className="opponent-side">
-          {this.generateMonsterImages(opponent, 'opponent')}
-        </div>
-      </section>
-    );
+    return (<section className="battlefield-visual row">
+      <div className="player-side">
+        {this.generateMonsterImages(player, 'player')}
+      </div>
+      <div className="opponent-side">
+        {this.generateMonsterImages(opponent, 'opponent')}
+      </div>
+    </section>);
   }
 }
 
-export default Monster;
+export default BattleField;

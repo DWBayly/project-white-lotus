@@ -1,16 +1,24 @@
 // Styling the player cards
+$activeMonster-width: 150px;
+$activeMonster-height: 150px;
+$benchedMonster-width: 115px;
+$benchedMonster-height: 115px;
 .battlefield-active{
   position: relative;
-  border-radius: $border-radius;
-  h4{
-    margin-left: 2rem;
+  .activemonster-container{
+    padding-left: 2rem;
+    h4{
+      font-size: .8em;
+    }
+    .modifiers{
+      width: $activeMonster-width;
+    }
   }
   .battlefield-active-battler{
-    margin-left: 2rem;
-    margin-bottom: 2rem;
+    margin-right: 4rem;
     position: relative;
-    width:150px;
-    height:150px;
+    width:$activeMonster-width;
+    height:$activeMonster-height;
     @include card-background-image();
     background-size: contain;
     border-radius: $border-radius;
@@ -37,11 +45,14 @@
       font-size: 1rem;
     }
   }
+}
+
+.battle-info{
+  display: flex;
   .abilities{
-    position: absolute;
-    bottom:18px; left:200px;
+    margin-right: 2rem;
     h4{
-      font-size: 1.1em;
+      font-size: 1em;
       margin-left: 0;
     }
     .abilities-actions{
@@ -50,54 +61,90 @@
       padding: .5rem 1rem;
     }
     button{
+      display: block;
       text-transform: capitalize;
       cursor: pointer;
       margin-top: .5rem;
       margin-bottom: .5rem;
+      margin-right: 1rem;
       font-size: 1rem;
       padding: 0 1rem;
     }
   }
 }
+.modifiers{
+  display: flex;
+  background-color: darken($player-color, 15%);
+  border-radius: $border-radius;
+  padding: 1rem 1rem;
+  margin-top: .5rem;
+  // default width
+  width:$benchedMonster-width;
+  img{
+    display: block;
+    border-radius: $border-radius / 2;
+    height: 32px;
+    width: 32px;
+    margin-right: 8px;
+    margin-bottom: 0;
+  }
+}
 
-.battlefield-onBench{
-  .bench-monster{
-    display: inline-block;
-    width:150px;
-    height:150px;
-    margin-right: 1rem;
-    position: relative;
-    @include card-background-image();
-    background-size: contain;
-    border-radius: $border-radius;
-    border: 2px solid white;
-    font-weight: bold;
-    .card-image-header{
-      overflow: hidden;
-      position: absolute;
-      width:100%;
-      height:100%;
-      top:0;
-      left:0;
-      right:0;
-      bottom:0;
-      text-align: center;
-      margin: auto;
-      img{
-        height: 100%;
+.battlefield-bench{
+  h4{
+    font-size:1em;
+  }
+}
+
+.battlefield-benched{
+  display: flex;
+  .bench-monster-container{
+    width:$benchedMonster-width;
+    height:$benchedMonster-height;
+    margin-right: 2rem;
+    h4{
+      font-size: .5em;
+      margin-bottom: 1rem;
+    }
+    .bench-monster{
+      width: 100%;
+      height: 100%;
+      display: inline-block;
+      margin-right: 1rem;
+      position: relative;
+      @include card-background-image();
+      background-size: contain;
+      border-radius: $border-radius;
+      border: 2px solid white;
+      font-weight: bold;
+      .card-image-header{
+        overflow: hidden;
+        position: absolute;
+        width:100%;
+        height:100%;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        text-align: center;
+        margin: auto;
+        img{
+          height: 100%;
+        }
+      }
+      span.card-hp{
+        font-size: 1rem;
+      }
+      span.card-acc{
+        font-size: 1rem;
       }
     }
     button{
-      position: absolute;
-      margin:0;
-      left:0;
-      top:0;
-    }
-    span.card-hp{
-      font-size: 1rem;
-    }
-    span.card-acc{
-      font-size: 1rem;
+      display: block;
+      line-height: 1em;
+      padding: 1rem;
+      width:100%;
+      margin-bottom: 1rem;
     }
   }
 }

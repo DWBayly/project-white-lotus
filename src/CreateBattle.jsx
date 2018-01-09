@@ -22,7 +22,7 @@ class CreateBattle extends Component {
       headers: {
         'content-type' : 'application/json'
       },
-      body: JSON.stringify({roomName})
+      body: JSON.stringify({roomName: encodeURI(roomName)})
     }).then(data => data.json().then(res => {
       this.setState({roomLink: res.flash});
       toggleElementById('roomLink');

@@ -27,8 +27,15 @@ section.modal {
       }
     }
     main {
+      text-align: center;
       position: relative;
       padding: 2rem;
+      img{
+        display: block;
+        width: 200px;
+        height: 200px;
+        margin: auto;
+      }
     }
     footer {
       position: absolute;

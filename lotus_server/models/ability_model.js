@@ -10,26 +10,34 @@ const abilityFuncs = {
     if (!player.activeMonster) {
       return;
     }
-    player.activeMonster.supercharged = true;
-    this.passiveActive = false;
-    return `${this.name} has supercharged ${player.activeMonster.name}`;
+    const targetMonster = player.activeMonster;
+    if(targetMonster.modifiers.has('aoe')){
+      return;
+    }
+    const description = 'Primary attacks damage all monsters on opponent\'s team.';
+    new Modifier(targetMonster, {supercharged: true}, 'aoe', description, (modifier) => {
+      if(!this.passiveActive){
+        modifier.removeModifier();
+      }
+    });
   },
   nanomachine_swarm: function(player){
     const {team} = player;
     // loops over each monster in the players team and applies the heal modifier if applicable.
     for(const monsterId in team){
       const curMonster = team[monsterId];
-      if(curMonster.creature === 'mecha' && !curMonster.modifiers.has('heal')){
+      if(curMonster.creature === 'mecha' && !curMonster.modifiers.has('heal') && curMonster.hp < curMonster.maxHp){
         // heal modifier increases hp by turn until the monster who applied has a false passiveActive
         // or monster to whom it is applied has max hp.
-        new Modifier(curMonster, 'heal', {}, (modifier) => {
+        const description = 'Monster is healed 2 hp per turn until fully healed.';
+        new Modifier(curMonster, {}, 'heal', description, (modifier, messages) => {
           if(!this.passiveActive){
             modifier.removeModifier();
           }
           if(curMonster.hp === curMonster.maxHp){
-            return;
+            modifier.removeModifier();
           }
-          curMonster.hp += 2;
+          return curMonster.healHp(2, messages);
         });
       }
     }
@@ -38,46 +46,57 @@ const abilityFuncs = {
     if (!player.activeMonster) {
       return;
     }
-    player.activeMonster.protector = this;
-    return `${this.name} is protecting ${player.activeMonster.name}`;
+    const targetMonster = player.activeMonster;
+    if(targetMonster.modifiers.has('shield')){
+      return;
+    }
+    const description = `${this.name} takes the first 5 damage ${targetMonster.name} takes each turn.`;
+    new Modifier(targetMonster, {protector: this}, 'shield', description, (modifier) => {
+      if(!this.passiveActive){
+        modifier.removeModifier();
+      }
+    });
   },
-  // Have to set type manual because asynchronous programming would not work here.
+  // Have to set type manually because asynchronous programming would not work here.
   // New types are set with the modifier and removed when the monster is benched.
   pierce: function(player){
     if (!player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(!targetMonster.modifier.has('morph') || targetMonster.type !== 'pierce'){
-      new Modifier(targetMonster, 'morph', {type: {id: 1, name: 'pierce', weakness: 2}}, (modifier) => {
-        if(player.activeMonster.bench) modifier.removeModifier();
-      });
+    if(targetMonster.modifiers.has('morph') || targetMonster.type === 'pierce'){
+      return;
     }
-    return `${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
+    const description = 'Changes type to pierce.';
+    new Modifier(targetMonster, {type: {id: 1, name: 'pierce', weakness: 2}}, 'morph', description, (modifier) => {
+      if(targetMonster.bench) modifier.removeModifier();
+    });
   },
   crush: function(player){
     if (!player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(!targetMonster.modifier.has('morph') || targetMonster.type !== 'crush'){
-      new Modifier(targetMonster, 'morph', {type: {id: 2, name: 'crush', weakness: 3}}, (modifier) => {
-        if(targetMonster.bench) modifier.removeModifier();
-      });
+    if(targetMonster.modifiers.has('morph') || targetMonster.type === 'crush'){
+      return;
     }
-    return `${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
+    const description = 'Changes type to crush.';
+    new Modifier(targetMonster, {type: {id: 2, name: 'crush', weakness: 3}}, 'morph', description, (modifier) => {
+      if(targetMonster.bench) modifier.removeModifier();
+    });
   },
   spray: function(player){
     if (!player.activeMonster) {
       return;
     }
     const targetMonster = player.activeMonster;
-    if(!targetMonster.modifier.has('morph') || targetMonster.type !== 'spray'){
-      new Modifier(player.activeMonster, 'morph', {type: {id: 3, name: 'spray', weakness: 1}}, (modifier) => {
-        if(targetMonster.bench) modifier.removeModifier();
-      });
+    if(targetMonster.modifiers.has('morph') || targetMonster.type === 'spray'){
+      return;
     }
-    return `${this.name} has changed ${player.activeMonster.name}'s type to ${player.activeMonster.type.name}`;
+    const description = 'Changes type to spray.';
+    new Modifier(player.activeMonster, {type: {id: 3, name: 'spray', weakness: 1}}, 'morph', description, (modifier) => {
+      if(targetMonster.bench) modifier.removeModifier();
+    });
   }
 };
 

@@ -10,6 +10,10 @@ module.exports = (server) => {
   socketRouter.genBattle = function(id){
     const roomFunctionality = socketFunctions(wss, id);
     this.ws(`/${id}`, roomFunctionality);
+    // For testing whether a room exists on the client side.
+    this.get(`/${id}`, (req, res) => {
+      res.send({flash: 'room exists!'});
+    });
   };
   socketRouter.post('/',(req,res) => {
     const {roomName} = req.body;
