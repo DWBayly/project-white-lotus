@@ -396,21 +396,21 @@ exports.seed = function(knex, Promise) {
           name: 'toxic_slime',
           aoe: false,
           dot: true,
-          description: 'Deal 4 damage per turn for 3 turns.'
+          description: 'Deal 400 damage per turn for 3 turns.'
         },
         {
           id: attacks[1],
           name: 'roar',
           aoe: true,
           dot: false,
-          description: 'Deal 3 damage to each enemy.'
+          description: 'Deal 300 damage to each enemy.'
         },
         {
           id: attacks[2],
           name: 'insanity',
           aoe: false,
           dot: false,
-          description: 'Deal 6 damage. Reduce the target\'s accuracy by 1 per turn until target is benched. '
+          description: 'Deal 600 damage. Reduce the target\'s accuracy by 1 per turn until target is benched. '
         },
         {
           id: attacks[3],
@@ -424,7 +424,7 @@ exports.seed = function(knex, Promise) {
           name: 'web_sling',
           aoe: false,
           dot: false,
-          description: 'Deal 5 damage. Next attack gets +2 accuracy, and target can\'t leave field.'
+          description: 'Deal 500 damage. Next attack gets +2 accuracy, and target can\'t leave field.'
         },
         {
           id: attacks[5],
@@ -438,63 +438,63 @@ exports.seed = function(knex, Promise) {
           name: 'vomitous_sludge',
           aoe: false,
           dot: true,
-          description: 'Deal 10 damage. Deal 1 damage per turn until target is benched.'
+          description: 'Deal 1000 damage. Deal 1 damage per turn until target is benched.'
         },
         {
           id: attacks[7],
           name: 'steel_jaw',
           aoe: false,
           dot: false,
-          description: 'Deal 14-18 damage.'
+          description: 'Deal 1400-1800 damage.'
         },
         {
           id: attacks[8],
           name: 'eldritch_horror',
           aoe: false,
           dot: false,
-          description: 'Deal 5-8 damage. Swap target with a random benched monster.'
+          description: 'Deal 500-800 damage. Swap target with a random benched monster.'
         },
         {
           id: attacks[9],
           name: 'neutralize',
           aoe: false,
           dot: false,
-          description: 'Deal 10-12 damage. Ignore an enemy passive until they are activated.'
+          description: 'Deal 1000-1200 damage. Ignore an enemy passive until they are activated.'
         },
         {
           id: attacks[10],
           name: 'stimulant',
           aoe: false,
           dot: false,
-          description: 'Deal 8 damage. Heal self for 4 HP.'
+          description: 'Deal 800 damage. Heal self for 400 HP.'
         },
         {
           id: attacks[11],
           name: 'hyper_lance',
           aoe: false,
           dot: false,
-          description: 'Deal 8-12 damage.'
+          description: 'Deal 800-1200 damage.'
         },
         {
           id: attacks[12],
           name: 'simulate_kaiju',
           aoe: false,
           dot: false,
-          description: 'Deal 10-12 damage. If enemy is a kaiju, gain its secondary attack.'
+          description: 'Deal 1000-1200 damage. If enemy is a kaiju, gain its secondary attack.'
         },
         {
           id: attacks[13],
           name: 'snake_handler',
           aoe: false,
           dot: false,
-          description: 'Deal 12-16 damage.'
+          description: 'Deal 1200-1600 damage.'
         },
         {
           id: attacks[14],
           name: 'neurotoxin',
           aoe: false,
           dot: false,
-          description: 'Deal 5-18 damage.'
+          description: 'Deal 500-1800 damage.'
         }
       ]),
       knex('abilities').insert([
@@ -506,7 +506,7 @@ exports.seed = function(knex, Promise) {
         {
           id: abilities[1],
           name: 'nanomachine_swarm',
-          description: 'Heal all mechas on your team by 2 HP per turn.'
+          description: 'Heal all mechas on your team by 200 HP per turn.'
         },
         {
           id: abilities[2],
