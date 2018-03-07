@@ -29,7 +29,7 @@ class Game{
       }
       // Loop over each modifier and update them. But only for the current active player.
       if(player === this.activePlayer){
-        monster.modifiers.forEach(modifier => {
+        monster.modifiers.forEachBackwards(modifier => {
           modifier.update(messages);
         });
       }
@@ -47,6 +47,7 @@ class Game{
   }
   switchTurns(){
     this.idlePlayer.checkForDeath();
+    this.activePlayer.checkForDeath();
     this.activePlayer.turn = false;
     this.idlePlayer.turn = true;
   }
@@ -68,11 +69,11 @@ class Game{
     // Takes the action given in the actionObj and runs it, creating the initial message array.
     let messages = this[action](actionObj) || [];
     // After action is over, switchTurns and check active players and run passives.
-    this.switchTurns();
-    this.findActivePlayer(actionObj);
     for(const player of this.players){
       this.passive(player, messages);
     }
+    this.switchTurns();
+    this.findActivePlayer(actionObj);
     return messages;
   }
 }

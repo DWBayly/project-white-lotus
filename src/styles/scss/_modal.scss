@@ -58,5 +58,9 @@ section.modal {
     height: 50%;
     width: 496px;
     margin: auto;
+    div.close-modal{
+      margin: auto;
+      width: 50%;
+    }
   }
 }

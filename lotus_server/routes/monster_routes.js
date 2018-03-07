@@ -53,7 +53,7 @@ module.exports = (db) => {
     // Pull the user model and buy dat monster
     new User({id}).fetch().then(user => {
       if (user.attributes.brouzoff < cost){
-        res.send(JSON.stringify({error: 'Sorry, not enough Brouzoff'}));
+        res.send(JSON.stringify({error: 'Sorry, not enough Brouzoff. Battle other players to earn Brouzoff!'}));
         return;
       }
       user.buyMonster(creature, cost).then(monster => {

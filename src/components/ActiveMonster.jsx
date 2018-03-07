@@ -7,10 +7,10 @@ class ActiveMonster extends Component {
   render() {
     const {monster} = this.props;
     return (
-      <div class="battlefield-active-battler" id={monster.id}>
-        <span class="card-hp">{monster.hp}</span>
-        <span class="card-acc">{monster.accuracy_bonus}</span>
-        <div class="active-monster-stats">
+      <div className="battlefield-active-battler" id={monster.id}>
+        <span className="card-hp">{monster.hp}</span>
+        <span className="card-acc">{monster.accuracy_bonus}</span>
+        <div className="active-monster-stats">
           {cardImageHeader(monster, toggleModalByIdButton(`${monster.id}-modal`))}
         </div>
       </div>

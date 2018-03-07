@@ -1,3 +1,4 @@
+const environment = 'production';
 // simple function to delay without blocking execution
 const delayFunction = (ms, callback) => {
   return new Promise(() => {
@@ -166,7 +167,12 @@ const updateGame = (battleComponent) => {
 
 const rejoinBattle = (battleComponent) => {
   const {roomName} = battleComponent.props;
-  const socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
+  let socket = null;
+  if (environment === 'development') {
+    socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
+  } else if (environment === 'production') {
+    socket = new WebSocket(`wss://projectwhitelotus.herokuapp.com/battles/${roomName}`);
+  }
   socket.addEventListener('open', () => {
     socket.send(JSON.stringify({
       messageType: 'rejoin',
@@ -179,7 +185,12 @@ const rejoinBattle = (battleComponent) => {
 
 const joinGame = (battleComponent, team) => {
   const {roomName} = battleComponent.props;
-  const socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
+  let socket = null;
+  if (environment === 'development') {
+    socket = new WebSocket(`ws://localhost:3001/battles/${roomName}`);
+  } else if (environment === 'production') {
+    socket = new WebSocket(`wss://projectwhitelotus.herokuapp.com/battles/${roomName}`);
+  }
   // Joining the game
   socket.addEventListener('open', () => {
     socket.send(JSON.stringify({
@@ -193,5 +204,6 @@ const joinGame = (battleComponent, team) => {
   socket.addEventListener('message', updateGame(battleComponent));
   return socket;
 };
+
 
 export {joinGame, rejoinBattle};

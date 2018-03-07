@@ -1,5 +1,6 @@
 const Jimp = require('jimp');
 const uuidv1 = require('uuid/v1');
+const path = require('path');
 
 // composites the first two indexes of the array containing monster parts
 function composeSS(x,y){
@@ -58,7 +59,7 @@ const monsterMash = (arr) => {
       composeSS(arr[0],arr[1]).then(function(r1){
         mash(arr, 2, r1).then(function(r2){
           let x = uuidv1();
-          r2.write("./dist/assets/monsters/"+x+".png");
+          r2.write(path.join(__dirname, `../dist/assets/monsters/${x}.png`));
           resolve(`/assets/monsters/${x}.png`);
         });
       });

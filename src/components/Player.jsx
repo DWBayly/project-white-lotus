@@ -22,8 +22,6 @@ class Player extends Component {
   }
   generateActiveMonster(){
     const {player} = this.props;
-    if(!player.team) return (<p>Waiting for other player.</p>);
-
     if(player.activeMonster){
       const monster = player.activeMonster;
       return (
@@ -80,19 +78,15 @@ class Player extends Component {
     );
   }
   render() {
-    /**
-     * <section className='modifiers'>
-       {player.activeMonster && <h4>Modifiers</h4>}
-       {player.activeMonster && this.showModifiers()}
-     </section>
-     */
     const {player} = this.props;
     return (
       <section className={this.props.className}>
         <div className="battlefield-active column column-60">
           <h4>Active Monster</h4>
           <section className="battle-info">
-            {this.generateActiveMonster()}
+            {!player.team && <p>Waiting for other player.</p>}
+            {player.team && !player.activeMonster && <p>Select your monster!</p>}
+            {player.team && this.generateActiveMonster()}
             <section className="abilities">
               {player.activeMonster && <h4>Actions</h4>}
               {this.printAttacks()}

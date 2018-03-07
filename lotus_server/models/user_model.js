@@ -1,3 +1,4 @@
+const path = require('path');
 const bookshelf = require('./lib/bookshelf');
 const uuidv1 = require('uuid/v1');
 const monsterMash = require('./monstermash');
@@ -33,10 +34,10 @@ module.exports = (db) => {
             let arm = randomComponent(arms);
             let body = randomComponent(bodies);
             let head = randomComponent(heads);
-            let img1 = './models/parts/'+arm.image_url+'RH.png';
-            let img2 = body.image_url;
-            let img3 = head.image_url;
-            let img4 = './models/parts/'+arm.image_url+'LH.png';
+            let img1 = path.join(__dirname, './parts/'+arm.image_url+'RH.png');
+            let img2 = path.join(__dirname, body.image_url);
+            let img3 = path.join(__dirname, head.image_url);
+            let img4 = path.join(__dirname, './parts/'+arm.image_url+'LH.png');
             let arr = [img1,img2,img3,img4];
             monsterMash(arr).then((result)=> {
               return {

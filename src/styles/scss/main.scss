@@ -27,7 +27,9 @@ body {
 p, a, label{
   color: white;
 }
-
+a{
+  text-decoration: underline;
+}
 hr{
   border-top: 2px solid white;
 }

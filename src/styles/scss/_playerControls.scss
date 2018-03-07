@@ -6,12 +6,14 @@ $benchedMonster-height: 115px;
 .battlefield-active{
   position: relative;
   .activemonster-container{
+    width: 150px;
     padding-left: 2rem;
+    margin-right:60px;
     h4{
       font-size: .8em;
     }
     .modifiers{
-      width: $activeMonster-width;
+      min-width: $activeMonster-width;
     }
   }
   .battlefield-active-battler{
@@ -74,18 +76,21 @@ $benchedMonster-height: 115px;
 }
 .modifiers{
   display: flex;
+  flex-wrap: wrap;
   background-color: darken($player-color, 15%);
   border-radius: $border-radius;
   padding: 1rem 1rem;
   margin-top: .5rem;
   // default width
-  width:$benchedMonster-width;
+  min-width:$benchedMonster-width;
   img{
+    flex-shrink: 2;
+    flex-basis: auto;
+    width: 25px;
+    height: 25px;
     display: block;
     border-radius: $border-radius / 2;
-    height: 32px;
-    width: 32px;
-    margin-right: 8px;
+    // margin-right: 8px;
     margin-bottom: 0;
   }
 }
