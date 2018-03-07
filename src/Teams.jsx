@@ -6,10 +6,15 @@ import {toggleElementById} from './lib/element_effect_helpers.js';
 class Teams extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      teamCreation: false
+    };
     this.sendTeam = this.sendTeam.bind(this);
     this.deleteTeam = this.deleteTeam.bind(this);
+    this.toggleTeamPane = this.toggleTeamPane.bind(this);
   }
   componentDidMount() {
+    this.props.setActiveLink(this.props.linkId);
     this.props.fetchMonsters();
     this.props.fetchTeams();
   }
@@ -88,23 +93,33 @@ class Teams extends Component {
    *
    * @param  {object} event - the click event object.
    */
-  toggleTeamPane(event) {
-    const button = event.currentTarget;
-    button.innerHTML === 'Close'
-      ? button.innerHTML = 'Add a Team'
-      : button.innerHTML = 'Close';
-    toggleElementById('addTeamPane');
-    toggleElementById('your-teams');
+  toggleTeamPane() {
+    const changeButton = () => {
+      const button = document.querySelector('.add-a-team');
+      if(!button){
+        return;
+      }
+      button.innerText === 'Close'
+        ? button.innerText = 'Add a Team'
+        : button.innerText = 'Close';
+    };
+    if(this.state.teamCreation){
+      this.setState({teamCreation:false, changeButton});
+    } else {
+      this.setState({teamCreation:true, changeButton});
+    }
   }
   render() {
+    const {teams} = this.props;
     return (<section className="teams-list">
       <h2>Teams</h2>
-      <button className="add-a-team" onClick={this.toggleTeamPane}>Add a Team</button>
-      <AddTeamPane sendTeam={this.sendTeam} monsters={this.props.monsters}/>
-      <section id="your-teams">
+      {((teams && teams.length > 0) || this.state.teamCreation) && <button className="add-a-team" onClick={this.toggleTeamPane}>Add a Team</button>}
+      {this.state.teamCreation && <AddTeamPane sendTeam={this.sendTeam} monsters={this.props.monsters}/>}
+      {!this.state.teamCreation && <section id="your-teams">
         <h3>Your Teams</h3>
-        {this.props.teams && this.printTeams()}
-      </section>
+        {(teams && teams.length === 0) && <p>You don't have any teams. <button onClick={this.toggleTeamPane}>Let's make one</button></p>}
+        {teams && this.printTeams()}
+      </section>}
     </section>);
   }
 }

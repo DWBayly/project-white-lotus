@@ -22,11 +22,15 @@ class BattleField extends Component {
       // if this monsters is the active monster, add the active class.
       if(activeMonster && monsterId === activeMonster.id) {
         className += ' active';
+        // HP:{curMonster.hp}
       }
       monsters.push(
         <div key={monsterId} id={`m-${monsterId}`} className={className} onClick={toggleModalByIdButton(`${curMonster.id}-modal`)}>
           <span className='monster-name'>{curMonster.name}</span>
-          <span className='monster-hp'>HP:{curMonster.hp}</span>
+          <span className='monster-type'>Type:{curMonster.type.name}</span>
+          <div className='monster-hp'>
+            <span style={{width:`${(curMonster.hp/curMonster.maxHp)*100}%`}}></span>
+          </div>
           <img src={curMonster.image_url} alt={curMonster.name}/>
         </div>
       );
@@ -48,9 +52,11 @@ class BattleField extends Component {
   render() {
     const {player, opponent} = this.props;
     return (<section className="battlefield-visual row">
+      <h4 className="player-name">{player.name}</h4>
       <div className="player-side">
         {this.generateMonsterImages(player, 'player')}
       </div>
+      <h4 className="opponent-name">{opponent.name}</h4>
       <div className="opponent-side">
         {this.generateMonsterImages(opponent, 'opponent')}
       </div>

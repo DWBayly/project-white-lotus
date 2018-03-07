@@ -34,9 +34,8 @@ class Battle extends Component {
     this.props.fetchTeams();
     // check if the room exists by making a get request then trying to parse the response as JSON
     // If the room exists, it will receive a json response. If it doesn't exists then it will set state roomNotFound to true.
-    fetch(`/battles/${roomName}`).then(res => {
+    fetch(`/battles/${roomName}/exists`).then(res => {
       res.json().then(() => {
-
       }).catch(() => {
         this.setState({roomNotFound: true});
       });
@@ -70,13 +69,15 @@ class Battle extends Component {
   gameOver() {
     const {gameOver} = this.state.game;
     if(gameOver){
-      toggleModalById('gameOverModal');
-      let earnings = 0;
+      let earnings = 25;
       if(gameOver.winner.id === this.state.battlerId){
         earnings = 50;
         editBrouzoff(this.state.game, earnings);
       }
       editBrouzoff(this.state.game, earnings);
+      setTimeout(() => {
+        toggleModalById('gameOverModal');
+      }, 1000);
       return(
         <section>
           <h3>Winner is {gameOver.winner.name}!</h3>
@@ -127,6 +128,13 @@ class Battle extends Component {
     return (
       <main>
         <div className="battlefield-teams">
+          {(this.props.teams && this.props.teams.length === 0) &&
+            <section>
+              <h3>You're almost ready to battle</h3>
+              <p>Your room is ready to go but you don't have any teams.</p>
+              <p>You'll need to <a href='/teams'>make one</a> before you can battle.</p>
+            </section>
+          }
           {this.props.teams && this.props.teams.map(this.renderTeam)}
         </div>
         <div id="battlefield" className='hidden'>
@@ -135,7 +143,7 @@ class Battle extends Component {
           {this.state.ready && <Player className='player row' player={this.state.player} socket={this.socket} curUserId={this.state.id} />}
           {this.state.ready && <section><span><a className='nav-link leave-game' href="/">Leave Game</a></span></section>}
         </div>
-        <Modal id="gameOverModal" header="Game Over" mainContent={this.gameOver()} footer={<a className="button" href="/">Done</a>} />
+        {this.state.game.gameOver && <Modal id="gameOverModal" header="Game Over" mainContent={this.gameOver()} footer={<a className="button" href="/">Done</a>} />}
         {this.state.game.players && this.generateModals(this.state.game)}
       </main>
     );

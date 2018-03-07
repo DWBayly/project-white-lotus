@@ -4,7 +4,7 @@ div#battlefield{
   padding-top: 5rem;
   section.messages {
     padding: 2rem 4rem;
-    height: 115px;
+    height: 120px;
     background-color: $messages-color;
     border: 2px solid $message-border-color;
     font-size: 1rem;
@@ -25,7 +25,7 @@ div#battlefield{
   .player {
     background-color: $player-color;
     border: 2px solid $message-border-color;
-    height: 325px;
+    min-height: 325px;
     padding: 2rem 4rem;
     position: relative;
     border-radius: $border-radius;

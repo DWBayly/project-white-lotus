@@ -14,6 +14,7 @@ class Monsters extends Component {
   }
 
   componentDidMount() {
+    this.props.setActiveLink(this.props.linkId);
     this.props.fetchMonsters();
   }
 
@@ -28,10 +29,7 @@ class Monsters extends Component {
     } else {
       return (<main>
         <h2>Monsters</h2>
-        <p>You don't have any monsters yet!</p>
-        <Link to='/store'>
-          <button>Store</button>
-        </Link>
+        <p>You don't have any monsters yet. Buy some at the <a href='/store'>store</a>.</p>
       </main>);
     }
   }

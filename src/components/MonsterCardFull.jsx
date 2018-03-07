@@ -11,7 +11,7 @@ class MonsterCardFull extends Component {
       for(const attackName in attacks){
         const attack = attacks[attackName];
         return (
-          <div class="card-details-attribute">
+          <div className="card-details-attribute">
             <strong>{attack.name}</strong>
             <p>{attack.description}</p>
           </div>
@@ -20,10 +20,10 @@ class MonsterCardFull extends Component {
     };
     const {monster} = this.props;
     return (
-      <div id={monster.id} class="card" data-active="false" id={monster.id}>
+      <div id={monster.id} className="card" data-active="false" id={monster.id}>
         {cardImageHeader(monster)}
-        <div class="card-body">
-          <div class="card-details">
+        <div className="card-body">
+          <div className="card-details">
             <h3>{monster.name}</h3>
             {renderAttacks(monster.attacks)}
             {cardInfo(monster)}

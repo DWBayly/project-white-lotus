@@ -2,6 +2,7 @@
 const express = require('express');
 const expressws = require('express-ws');
 const socketFunctions = require('./socket_functions');
+const path = require('path');
 
 module.exports = (server) => {
   const wss = expressws(server);
@@ -11,14 +12,17 @@ module.exports = (server) => {
     const roomFunctionality = socketFunctions(wss, id);
     this.ws(`/${id}`, roomFunctionality);
     // For testing whether a room exists on the client side.
-    this.get(`/${id}`, (req, res) => {
-      res.send({flash: 'room exists!'});
+    this.get(`/${id}/exists`, (req, res) => {
+      res.send({flash: 'Sorry, this room already exists.'});
     });
   };
+  socketRouter.get('/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../build/index.html'));
+  });
   socketRouter.post('/',(req,res) => {
     const {roomName} = req.body;
     socketRouter.genBattle(roomName);
-    res.send(JSON.stringify({flash:`http://localhost:3000/battle/${roomName}`}));
+    res.send(JSON.stringify({flash:`/battles/${roomName}`}));
   });
   return socketRouter;
 };

@@ -3,6 +3,7 @@ import CardModal from './components/CardModal.jsx';
 
 class Store extends Component {
   componentDidMount() {
+    this.props.setActiveLink(this.props.linkId);
     this.props.loadApp();
   }
 
@@ -13,7 +14,7 @@ class Store extends Component {
         <div className="store-item egg">
           <div className="store-item-details">
             <h4>Kaiju Egg</h4>
-            <img src="assets/images/kaiju-egg.png" alt="Kaiju Egg"/>
+            <img src="/assets/images/kaiju-egg.png" alt="Kaiju Egg"/>
             <p className="price">Cost:&#3647;50</p>
           </div>
           <button onClick={this.props.purchaseEgg}>Purchase</button>
@@ -21,7 +22,7 @@ class Store extends Component {
         <div className="store-item crate">
           <div className="store-item-details">
             <h4>Mech Crate</h4>
-            <img src="assets/images/mecha-box.png" alt="Mecha Box"/>
+            <img src="/assets/images/mecha-box.png" alt="Mecha Box"/>
             <p className="price">Cost:&#3647;50</p>
           </div>
           <button onClick={this.props.purchaseCrate}>Purchase</button>

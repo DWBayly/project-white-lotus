@@ -48,6 +48,13 @@ class ModifierCollection{
     }
   }
 
+  forEachBackwards(callback){
+    const myKeys = Object.keys(this);
+    for(let i = myKeys.length - 1; i >= 0; i--){
+      callback(this[myKeys[i]]);
+    }
+  }
+
   /**
    * length - Gets the number of modifiers a collection has.
    *

@@ -13,6 +13,9 @@ class Modal extends Component {
         <div className='card-modal-container'>
           <main>
             <DetailedCard className='card-full card-modal' monster={this.props.monster} />
+            <div className='close-modal'>
+              <button>Close</button>
+            </div>
           </main>
         </div>
       </section>
